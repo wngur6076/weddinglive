@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+
+// Route::get('{any}', [AppController::class, 'index'])
+//     ->where('any', '.*')
+//     ->middleware('auth')
+//     ->name('home');
+
+Route::get('{any}', [AppController::class, 'index'])
+    ->where('any', '.*')
+    ->name('home');

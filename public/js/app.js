@@ -2755,6 +2755,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2783,6 +2806,50 @@ __webpack_require__.r(__webpack_exports__);
         thumbnail: 'https://picsum.photos/64/64/?image=5'
       }]
     };
+  },
+  methods: {
+    addScript: function addScript() {
+      var script = document.createElement('script');
+      var script1 = document.createElement('script'); // script.onload = () => {
+      //     jwplayer("palyVideo").setup({
+      //         "playlist": [{
+      //             "file": "http://192.168.123.101:1935/Juhyeok/brick4/playlist.m3u8?DVR",
+      //         }]
+      //     });
+      //     jwplayer().onPlay(function() {
+      //         document.getElementById('palyVideo').style.display = "block";
+      //         document.getElementById('ddayVideo').style.display = "none";
+      //     });
+      //     jwplayer().onError(function() {
+      //         document.getElementById('palyVideo').style.display = "none";
+      //         document.getElementById('ddayVideo').style.display = "block";
+      //     });
+      // }
+
+      script.onload = function () {
+        jwplayer("palyVideo").setup({
+          "playlist": [{
+            "file": "http://3.35.149.92:1935/Juhyeok/brick-live/playlist.m3u8"
+          }]
+        });
+      };
+
+      script1.onload = function () {
+        jwplayer("afterVideo").setup({
+          "playlist": [{
+            "file": "http://3.35.149.92:1935/Juhyeok/brick/playlist.m3u8?DVR"
+          }]
+        });
+      };
+
+      script.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js';
+      document.head.appendChild(script);
+      script1.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js';
+      document.head.appendChild(script1);
+    }
+  },
+  created: function created() {
+    this.addScript();
   }
 });
 
@@ -58578,20 +58645,34 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
       _c("div", { staticClass: "jb-wrap" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "jb-text" },
-          [
-            _c("p", [_vm._v("최석원&최미라님의 결혼식 시작까지")]),
-            _vm._v(" "),
-            _c("flip-countdown", { attrs: { deadline: "2021-06-20 12:30:00" } })
-          ],
-          1
-        )
+        _c("div", { attrs: { id: "ddayVideo" } }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "jb-text" },
+            [
+              _c("p", [_vm._v("최석원&최미라님의 결혼식 시작까지")]),
+              _vm._v(" "),
+              _c("flip-countdown", {
+                attrs: { deadline: "2021-06-20 12:30:00" }
+              })
+            ],
+            1
+          )
+        ])
       ]),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "palyVideo" } }),
+      _vm._v(" "),
+      _vm._m(4),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "afterVideo" } }),
       _vm._v(" "),
       _c("div", {
         staticClass: "banner_div row",
@@ -58600,9 +58681,9 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(5),
       _vm._v(" "),
-      _vm._m(3),
+      _vm._m(6),
       _vm._v(" "),
       _c("lingallery", {
         staticClass: "mb-5",
@@ -58637,11 +58718,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("span", { staticClass: "badge badge-primary" }, [
+        _vm._v("결혼식 전(카운트 다운)")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "jb-image" }, [
       _c("img", {
         staticClass: "img-fluid",
         attrs: { src: "http://weddinglive.kr/resources/img/view/ddaybg.png" }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("span", { staticClass: "badge badge-danger" }, [
+        _vm._v("결혼식 중(라이브 방송)")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _c("span", { staticClass: "badge badge-success" }, [
+        _vm._v("결혼식 후(녹화 실행)")
+      ])
     ])
   },
   function() {

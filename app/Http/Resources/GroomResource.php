@@ -11,6 +11,7 @@ class GroomResource extends JsonResource
         return [
             'data' => [
                 'type' => 'grooms',
+                'groom_id' => $this->id,
                 'name' => $this->name,
                 'phone_number' => $this->phone_number,
                 'bank_name' => $this->bank_name,

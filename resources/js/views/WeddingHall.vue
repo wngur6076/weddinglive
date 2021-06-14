@@ -4,13 +4,36 @@
             <p class="m-0">디엘웨딩홀</p>
             <h2>아모르홀</h2>
         </div>
+
+        <!-- <div class="jb-wrap">
+            <div id="palyVideo" style="display:none;"></div>
+            <div id="ddayVideo" style="display:none;">
+                <div class="jb-image"><img src="http://weddinglive.kr/resources/img/view/ddaybg.png" class="img-fluid"></div>
+                <div class="jb-text">
+                    <p>최석원&최미라님의 결혼식 시작까지</p>
+                    <flip-countdown deadline="2021-06-20 12:30:00"></flip-countdown>
+                </div>
+            </div>
+		</div> -->
+
+        <h3><span class="badge badge-primary">결혼식 전(카운트 다운)</span></h3>
         <div class="jb-wrap">
-			<div class="jb-image"><img src="http://weddinglive.kr/resources/img/view/ddaybg.png" class="img-fluid"></div>
-			<div class="jb-text">
-				<p>최석원&최미라님의 결혼식 시작까지</p>
-                <flip-countdown deadline="2021-06-20 12:30:00"></flip-countdown>
-			</div>
+            <div id="ddayVideo">
+                <div class="jb-image"><img src="http://weddinglive.kr/resources/img/view/ddaybg.png" class="img-fluid"></div>
+                <div class="jb-text">
+                    <p>최석원&최미라님의 결혼식 시작까지</p>
+                    <flip-countdown deadline="2021-06-20 12:30:00"></flip-countdown>
+                </div>
+            </div>
 		</div>
+
+        <h3><span class="badge badge-danger">결혼식 중(라이브 방송)</span></h3>
+        <div id="palyVideo"></div>
+
+        <h3><span class="badge badge-success">결혼식 후(녹화 실행)</span></h3>
+        <div id="afterVideo"></div>
+
+
         <div class="banner_div row" onclick="window.open('http://www.weddingview.kr/wedding-live-page/')"></div>
         <div class="section d-flex flex-column justify-content-center align-items-center">
             <h1 class="section_name">최석원 & 김미라</h1>
@@ -124,7 +147,57 @@ export default {
             },
         ]};
     },
+
+    methods: {
+        addScript() {
+            const script = document.createElement('script')
+            const script1 = document.createElement('script')
+
+            // script.onload = () => {
+            //     jwplayer("palyVideo").setup({
+            //         "playlist": [{
+            //             "file": "http://192.168.123.101:1935/Juhyeok/brick4/playlist.m3u8?DVR",
+            //         }]
+            //     });
+            //     jwplayer().onPlay(function() {
+            //         document.getElementById('palyVideo').style.display = "block";
+            //         document.getElementById('ddayVideo').style.display = "none";
+            //     });
+            //     jwplayer().onError(function() {
+            //         document.getElementById('palyVideo').style.display = "none";
+            //         document.getElementById('ddayVideo').style.display = "block";
+            //     });
+            // }
+
+            script.onload = () => {
+                jwplayer("palyVideo").setup({
+                    "playlist": [{
+                        "file": "http://3.35.149.92:1935/Juhyeok/brick-live/playlist.m3u8",
+                    }]
+                });
+            }
+
+            script1.onload = () => {
+                jwplayer("afterVideo").setup({
+                    "playlist": [{
+                        "file": "http://3.35.149.92:1935/Juhyeok/brick/playlist.m3u8?DVR",
+                    }]
+                });
+            }
+
+            script.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js'
+            document.head.appendChild(script)
+
+            script1.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js'
+            document.head.appendChild(script1)
+        }
+    },
+
+    created () {
+        this.addScript();
+    }
 }
+
 </script>
 
 <style scoped>

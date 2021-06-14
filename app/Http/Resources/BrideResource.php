@@ -11,6 +11,7 @@ class BrideResource extends JsonResource
         return [
             'data' => [
                 'type' => 'brides',
+                'bride_id' => $this->id,
                 'name' => $this->name,
                 'phone_number' => $this->phone_number,
                 'bank_name' => $this->bank_name,

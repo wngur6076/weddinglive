@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Bride;
 use App\Models\Groom;
+use App\Models\WeddingHall;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateWeddingHallTest extends TestCase
@@ -33,6 +34,7 @@ class CreateWeddingHallTest extends TestCase
             ->assertJson([
                 'data' => [
                     'type' => 'grooms',
+                    'groom_id' => $groom->id,
                     'name' => 'Testing Name',
                     'phone_number' => '010-1234-5678',
                     'bank_name' => '카카오뱅크',
@@ -66,6 +68,7 @@ class CreateWeddingHallTest extends TestCase
             ->assertJson([
                 'data' => [
                     'type' => 'brides',
+                    'bride_id' => $bride->id,
                     'name' => 'Testing Name',
                     'phone_number' => '010-1234-5678',
                     'bank_name' => '카카오뱅크',
@@ -80,14 +83,64 @@ class CreateWeddingHallTest extends TestCase
     /** @test */
     function users_can_create_wedding_hall()
     {
-        $response = $this->post('/api/wedding-hall', [
+        $this->withoutExceptionHandling();
+        $groom = Groom::factory()->create();
+        $bride = Bride::factory()->create();
+
+        $response = $this->post('/api/wedding-halls', [
             'title' => 'Testing Title',
             'subtitle' => 'Testing Subtitle',
             'location' => '부산 동구 조방로 14',
             'start_time' => '2021-06-20 12:30',
-            'live_Time' => '90',
+            'live_time' => 60,
             'greetings' => '평생을 같이하고 싶은 사람을 만났습니다',
+            'groom_id' => $groom->id,
+            'bride_id' => $bride->id,
         ]);
-        $response->assertStatus(200);
+
+        $wedding_hall = WeddingHall::first();
+
+        $this->assertCount(1, WeddingHall::all());
+        $this->assertEquals('Testing Title', $wedding_hall->title);
+        $this->assertEquals('Testing Subtitle', $wedding_hall->subtitle);
+        $this->assertEquals('부산 동구 조방로 14', $wedding_hall->location);
+        $this->assertEquals('2021-06-20 12:30:00', $wedding_hall->start_time);
+        $this->assertEquals(60, $wedding_hall->live_time);
+        $this->assertEquals('평생을 같이하고 싶은 사람을 만났습니다', $wedding_hall->greetings);
+        $response->assertStatus(201)
+            ->assertJson([
+                'data' => [
+                    'type' => 'wedding-halls',
+                    'wedding_hall_id' => $wedding_hall->id,
+                    'title' => 'Testing Title',
+                    'subtitle' => 'Testing Subtitle',
+                    'location' => '부산 동구 조방로 14',
+                    'date' => '2021년 06월 20일 일요일',
+                    'start_time' => 'PM 12시 30분',
+                    'end_time' => 'PM 13시 30분',
+                    'greetings' => '평생을 같이하고 싶은 사람을 만났습니다',
+                    'groom_by' => [
+                        'data' => [
+                            'groom_id' => $groom->id,
+                            'name' => $groom->name,
+                            'phone_number' => $groom->phone_number,
+                            'bank_name' => $groom->bank_name,
+                            'account_number' => $groom->account_number,
+                        ],
+                    ],
+                    'bride_by' => [
+                        'data' => [
+                            'bride_id' => $bride->id,
+                            'name' => $bride->name,
+                            'phone_number' => $bride->phone_number,
+                            'bank_name' => $bride->bank_name,
+                            'account_number' => $bride->account_number,
+                        ],
+                    ],
+                ],
+                'links' => [
+                    'self' => url('/wedding-halls/'.$wedding_hall->id),
+                ]
+            ]);
     }
 }

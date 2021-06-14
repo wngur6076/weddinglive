@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\GroomsController;
 use App\Http\Controllers\BridesController;
+use App\Http\Controllers\GroomsController;
+use App\Http\Controllers\WeddingHallsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use App\Http\Controllers\BridesController;
 
 Route::post('/grooms', [GroomsController::class, 'store']);
 Route::post('/brides', [BridesController::class, 'store']);
+Route::post('/wedding-halls', [WeddingHallsController::class, 'store']);
 
 Route::post('/generate-token', [ChatController::class, 'generateToken']);
 Route::post('/leave-channel', [ChatController::class, 'leaveChannel']);

@@ -172,7 +172,7 @@ export default {
             script.onload = () => {
                 jwplayer("palyVideo").setup({
                     "playlist": [{
-                        "file": "http://3.35.149.92:1935/Juhyeok/brick-live/playlist.m3u8",
+                        "file": "http://3.36.77.137:1935/Juhyeok/smil:brick-test.smil/playlist.m3u8?DVR",
                     }]
                 });
             }
@@ -180,7 +180,7 @@ export default {
             script1.onload = () => {
                 jwplayer("afterVideo").setup({
                     "playlist": [{
-                        "file": "http://3.35.149.92:1935/Juhyeok/brick/playlist.m3u8?DVR",
+                        "file": "http://3.36.77.137:1935/Juhyeok/brick/playlist.m3u8?DVR",
                     }]
                 });
             }
@@ -221,8 +221,9 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate( -50%, -50% );
-        font-size: 25px;
+        font-size: 18px;
         color: #7F5C37;
+        min-width: 800px;
     }
     .banner_div {
         width: 100%;

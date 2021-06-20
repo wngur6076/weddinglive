@@ -16,6 +16,9 @@
             </div>
 		</div> -->
 
+        <!-- <image src="http://192.168.123.101:1935/Juhyeok/definst/brick/image.gif" /> -->
+
+
         <h3><span class="badge badge-primary">결혼식 전(카운트 다운)</span></h3>
         <div class="jb-wrap">
             <div id="ddayVideo">
@@ -109,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <lingallery class="mb-5" :iid.sync="currentId" :width="width" :height="height" :items="items"/>
+        <lingallery class="mb-5" :width="width" :height="height" :items="items"/>
     </div>
 </template>
 
@@ -172,18 +175,20 @@ export default {
             script.onload = () => {
                 jwplayer("palyVideo").setup({
                     "playlist": [{
-                        "file": "http://3.36.77.137:1935/Juhyeok/smil:brick-test.smil/playlist.m3u8?DVR",
+                        "file": "http://192.168.123.101:1935/Juhyeok/brick2/playlist.m3u8",
+                        "image": "http://192.168.123.101:1935/Juhyeok/brick2/image.gif",
                     }]
                 });
             }
+            // <image src="http://192.168.123.101:1935/Juhyeok/brick/image.gif" />
 
-            script1.onload = () => {
-                jwplayer("afterVideo").setup({
-                    "playlist": [{
-                        "file": "http://3.36.77.137:1935/Juhyeok/brick/playlist.m3u8?DVR",
-                    }]
-                });
-            }
+            // script1.onload = () => {
+            //     jwplayer("afterVideo").setup({
+            //         "playlist": [{
+            //             "file": "http://192.168.123.101:1935/Juhyeok/brick2/playlist.m3u8?DVR",
+            //         }]
+            //     });
+            // }
 
             script.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js'
             document.head.appendChild(script)

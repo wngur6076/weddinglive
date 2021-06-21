@@ -2781,6 +2781,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2832,19 +2833,20 @@ __webpack_require__.r(__webpack_exports__);
       script.onload = function () {
         jwplayer("palyVideo").setup({
           "playlist": [{
-            "file": "http://192.168.123.101:1935/Juhyeok/brick2/playlist.m3u8",
-            "image": "http://192.168.123.101:1935/Juhyeok/brick2/image.gif"
+            "file": "http://3.36.95.96:1935/WeddingLive/brick/playlist.m3u8" // "image": "http://192.168.123.101:1935/Juhyeok/brick2/image.gif",
+
           }]
         });
       }; // <image src="http://192.168.123.101:1935/Juhyeok/brick/image.gif" />
-      // script1.onload = () => {
-      //     jwplayer("afterVideo").setup({
-      //         "playlist": [{
-      //             "file": "http://192.168.123.101:1935/Juhyeok/brick2/playlist.m3u8?DVR",
-      //         }]
-      //     });
-      // }
 
+
+      script1.onload = function () {
+        jwplayer("afterVideo").setup({
+          "playlist": [{
+            "file": "http://3.36.95.96:1935/WeddingLive/brick2/playlist.m3u8"
+          }]
+        });
+      };
 
       script.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js';
       document.head.appendChild(script);
@@ -2867,30 +2869,91 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
+/* harmony import */ var _authorization_authorize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./authorization/authorize */ "./resources/js/authorization/authorize.js");
+
 
 
 
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('chat-room', require('./components/ChatRoom.vue').default);
 
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_2__.default({
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('chat-room', __webpack_require__(/*! ./views/ChatRoom.vue */ "./resources/js/views/ChatRoom.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use(_authorization_authorize__WEBPACK_IMPORTED_MODULE_2__.default);
+var app = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
   el: '#app',
   components: {
     App: _components_App__WEBPACK_IMPORTED_MODULE_1__.default
   },
   router: _router__WEBPACK_IMPORTED_MODULE_0__.default
 });
-vue__WEBPACK_IMPORTED_MODULE_2__.default.filter('two_digits', function (value) {
+vue__WEBPACK_IMPORTED_MODULE_3__.default.filter('two_digits', function (value) {
   if (value.toString().length <= 1) {
     return "0" + value.toString();
   }
 
   return value.toString();
+});
+
+/***/ }),
+
+/***/ "./resources/js/authorization/authorize.js":
+/*!*************************************************!*\
+  !*** ./resources/js/authorization/authorize.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _policies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./policies */ "./resources/js/authorization/policies.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  install: function install(Vue, options) {
+    Vue.prototype.authorize = function (policy, model) {
+      if (!window.Auth.signedIn) return false;
+
+      if (typeof policy === 'string' && _typeof(model) === 'object') {
+        var user = window.Auth.user;
+        return _policies__WEBPACK_IMPORTED_MODULE_0__.default[policy](user, model); // authorize('modify', answer)
+      }
+    };
+
+    Vue.prototype.user = window.Auth.user;
+    Vue.prototype.signedIn = window.Auth.signedIn;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/authorization/policies.js":
+/*!************************************************!*\
+  !*** ./resources/js/authorization/policies.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  modify: function modify(user, model) {
+    return user.id === model.user.id;
+  },
+  accept: function accept(user, answer) {
+    return user.id === answer.question_user_id;
+  },
+  deleteQuestion: function deleteQuestion(user, question) {
+    return user.id === question.user.id && question.answers_count < 1;
+  }
 });
 
 /***/ }),
@@ -58692,7 +58755,9 @@ var render = function() {
       _c("lingallery", {
         staticClass: "mb-5",
         attrs: { width: _vm.width, height: _vm.height, items: _vm.items }
-      })
+      }),
+      _vm._v(" "),
+      _c("chat-room", { attrs: { "auth-user": _vm.user } })
     ],
     1
   )

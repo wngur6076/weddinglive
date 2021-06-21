@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import router from './router';
 import App from './components/App';
+import Authorization from './authorization/authorize'
 
 require('./bootstrap');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('chat-room', require('./components/ChatRoom.vue').default);
+Vue.component('chat-room', require('./views/ChatRoom.vue').default);
+
+Vue.use(Authorization);
 
 const app = new Vue({
     el: '#app',

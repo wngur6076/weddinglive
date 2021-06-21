@@ -113,6 +113,7 @@
             </div>
         </div>
         <lingallery class="mb-5" :width="width" :height="height" :items="items"/>
+        <chat-room :auth-user="user"></chat-room>
     </div>
 </template>
 
@@ -175,20 +176,20 @@ export default {
             script.onload = () => {
                 jwplayer("palyVideo").setup({
                     "playlist": [{
-                        "file": "http://192.168.123.101:1935/Juhyeok/brick2/playlist.m3u8",
-                        "image": "http://192.168.123.101:1935/Juhyeok/brick2/image.gif",
+                        "file": "http://3.36.95.96:1935/WeddingLive/brick/playlist.m3u8",
+                        // "image": "http://192.168.123.101:1935/Juhyeok/brick2/image.gif",
                     }]
                 });
             }
             // <image src="http://192.168.123.101:1935/Juhyeok/brick/image.gif" />
 
-            // script1.onload = () => {
-            //     jwplayer("afterVideo").setup({
-            //         "playlist": [{
-            //             "file": "http://192.168.123.101:1935/Juhyeok/brick2/playlist.m3u8?DVR",
-            //         }]
-            //     });
-            // }
+            script1.onload = () => {
+                jwplayer("afterVideo").setup({
+                    "playlist": [{
+                        "file": "http://3.36.95.96:1935/WeddingLive/brick2/playlist.m3u8",
+                    }]
+                });
+            }
 
             script.src = 'https://cdn.jwplayer.com/libraries/wEhXm0ld.js'
             document.head.appendChild(script)

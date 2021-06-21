@@ -11,6 +11,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        window.Auth = {!! json_encode([
+                'signedIn' => Auth::check(),
+                'user' => Auth::user()
+            ])!!}
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,6 +27,7 @@
 </head>
 <body>
     <div id="app">
+        <image src="http://192.168.123.101:1935/Juhyeok/brick/image.gif" referrerpolicy="no-referrer-when-downgrade"/>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 {{-- <a class="navbar-brand" href="{{ url('/') }}">
